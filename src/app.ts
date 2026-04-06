@@ -1,5 +1,5 @@
 import { Hono } from 'hono'
-import UserController from './controllers/user.controller';
+import UserController from './controllers/user.controller'
 
 const users = new UserController()
 
@@ -9,8 +9,6 @@ app.get('/', (c) => {
   return c.text('Hello Hono!')
 })
 
-
-
-app.route('/api', users.getRouter())
+app.route('/api', users.routes())
 
 export default app

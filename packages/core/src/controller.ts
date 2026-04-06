@@ -14,15 +14,20 @@ abstract class Controller<T extends Entity> {
 
   constructor() {
     this.app = new Hono()
-    this.routes()
+    this.registered()
+    return this
   }
 
-  protected routes(): void {
+  protected registered(): void {
     this.app.get(`${this.prefix}/`, (c) => this.get(c))
     this.app.get(`${this.prefix}/:id`, (c) => this.getById(c))
     this.app.post(`${this.prefix}/`, (c) => this.create(c))
     this.app.put(`${this.prefix}/:id`, (c) => this.update(c))
     this.app.delete(`${this.prefix}/:id`, (c) => this.delete(c))
+  }
+
+  public routes(): Hono {
+    return this.app
   }
 
   async get(c: Context): Promise<Response> {
@@ -169,10 +174,6 @@ abstract class Controller<T extends Entity> {
         500,
       )
     }
-  }
-
-  getRouter(): Hono {
-    return this.app
   }
 }
 
