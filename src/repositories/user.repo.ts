@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import Repository, { BaseEntitySchema } from '@aps/core/repository'
-import type { CreateInput, UpdateInput } from '@aps/core-types'
+import Repository, { BaseEntitySchema } from '@aps/next-api-core/repository'
+import type { CreateInput, UpdateInput } from '@aps/next-api-types'
 
 const userSchema = BaseEntitySchema(
   z.object({

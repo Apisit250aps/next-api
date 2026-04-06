@@ -1,5 +1,5 @@
 {
-  "name": "@aps/core",
+  "name": "@aps/next-api-core",
   "version": "0.1.0",
   "private": false,
   "type": "module",
@@ -27,7 +27,7 @@
     "clean": "rimraf dist"
   },
   "dependencies": {
-    "@aps/core-types": "file:../types"
+    "@aps/next-api-types": "file:../types"
   },
   "peerDependencies": {
     "hono": "^4.0.0",

@@ -7,7 +7,7 @@ import type {
 } from 'mongodb'
 import { v7 as uuidv7 } from 'uuid'
 import { z } from 'zod'
-import type { Entity, CreateInput, UpdateInput } from '@aps/core-types'
+import type { Entity, CreateInput, UpdateInput } from '@aps/next-api-types'
 
 export const BaseEntitySchema = <T extends z.ZodRawShape>(
   schema: z.ZodObject<T>,

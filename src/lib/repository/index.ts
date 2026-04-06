@@ -10,7 +10,7 @@ import { uuidv7 } from './utils'
 import { BaseEntitySchema } from './model'
 
 import { z } from 'zod'
-import type { Entity, CreateInput, UpdateInput } from '@aps/core-types'
+import type { Entity, CreateInput, UpdateInput } from '@aps/next-api-types'
 
 abstract class Repository<T extends Entity> {
   abstract readonly collectionName: string

@@ -13,8 +13,8 @@ Open: <http://localhost:3000>
 
 This workspace now contains reusable packages in `packages/`:
 
-- `@aps/core-types`: shared types (e.g. `ApiResponse`, `Entity`)
-- `@aps/core`: base `Controller` and `Repository`
+- `@aps/next-api-types`: shared types (e.g. `ApiResponse`, `Entity`)
+- `@aps/next-api-core`: base `Controller` and `Repository`
 
 Build packages:
 
@@ -51,9 +51,9 @@ npm install git+https://github.com/Apisit250aps/core-repository.git#main
 Then import in your project:
 
 ```ts
-import Controller from '@aps/core/controller'
-import Repository, { BaseEntitySchema } from '@aps/core/repository'
-import type { ApiResponse } from '@aps/core-types'
+import Controller from '@aps/next-api-core/controller'
+import Repository, { BaseEntitySchema } from '@aps/next-api-core/repository'
+import type { ApiResponse } from '@aps/next-api-types'
 ```
 
 Notes:

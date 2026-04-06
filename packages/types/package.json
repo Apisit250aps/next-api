@@ -1,5 +1,5 @@
 {
-  "name": "@aps/core-types",
+  "name": "@aps/next-api-types",
   "version": "0.1.0",
   "private": false,
   "type": "module",
