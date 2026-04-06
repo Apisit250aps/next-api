@@ -19,7 +19,7 @@ export const BaseEntitySchema = <T extends z.ZodRawShape>(
   })
 }
 
-type Entity = {
+export type Entity = {
   id: string
   createdAt: Date
   updatedAt: Date
