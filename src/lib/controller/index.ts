@@ -1,4 +1,4 @@
-import type { Entity, CreateInput, UpdateInput } from '../repository'
+import type { ApiResponse, Entity, CreateInput, UpdateInput } from '@/types'
 import type Repository from '../repository'
 import { Hono, type Context } from 'hono'
 
@@ -23,10 +23,19 @@ abstract class Controller<T extends Entity> {
   async get(c: Context): Promise<Response> {
     try {
       const items = await this.repository.findAll()
-      return c.json(items)
+      return c.json<ApiResponse<T[]>>({
+        success: true,
+        message: 'Fetched successfully',
+        data: items,
+      })
     } catch (error) {
-      return c.json(
-        { error: error instanceof Error ? error.message : 'Unknown error' },
+      return c.json<ApiResponse<null>>(
+        {
+          success: false,
+          message: 'Failed to fetch items',
+          data: null,
+          error: error instanceof Error ? error.message : 'Unknown error',
+        },
         500,
       )
     }
@@ -37,12 +46,29 @@ abstract class Controller<T extends Entity> {
     try {
       const item = await this.repository.findById(id)
       if (!item) {
-        return c.json({ error: 'Not found' }, 404)
+        return c.json<ApiResponse<null>>(
+          {
+            success: false,
+            message: 'Not found',
+            data: null,
+            error: 'Not found',
+          },
+          404,
+        )
       }
-      return c.json(item)
+      return c.json<ApiResponse<T>>({
+        success: true,
+        message: 'Fetched successfully',
+        data: item,
+      })
     } catch (error) {
-      return c.json(
-        { error: error instanceof Error ? error.message : 'Unknown error' },
+      return c.json<ApiResponse<null>>(
+        {
+          success: false,
+          message: 'Failed to fetch item',
+          data: null,
+          error: error instanceof Error ? error.message : 'Unknown error',
+        },
         500,
       )
     }
@@ -52,10 +78,22 @@ abstract class Controller<T extends Entity> {
     try {
       const body = await c.req.json<CreateInput<T>>()
       const created = await this.repository.create(body)
-      return c.json(created, 201)
+      return c.json<ApiResponse<T>>(
+        {
+          success: true,
+          message: 'Created successfully',
+          data: created,
+        },
+        201,
+      )
     } catch (error) {
-      return c.json(
-        { error: error instanceof Error ? error.message : 'Unknown error' },
+      return c.json<ApiResponse<null>>(
+        {
+          success: false,
+          message: 'Failed to create item',
+          data: null,
+          error: error instanceof Error ? error.message : 'Unknown error',
+        },
         400,
       )
     }
@@ -66,13 +104,30 @@ abstract class Controller<T extends Entity> {
     try {
       const body = await c.req.json<UpdateInput<T>>()
       const updated = await this.repository.update(id, body)
-      return c.json(updated)
+      return c.json<ApiResponse<T>>({
+        success: true,
+        message: 'Updated successfully',
+        data: updated,
+      })
     } catch (error) {
       if (error instanceof Error && error.message.includes('not found')) {
-        return c.json({ error: error.message }, 404)
+        return c.json<ApiResponse<null>>(
+          {
+            success: false,
+            message: 'Not found',
+            data: null,
+            error: error.message,
+          },
+          404,
+        )
       }
-      return c.json(
-        { error: error instanceof Error ? error.message : 'Unknown error' },
+      return c.json<ApiResponse<null>>(
+        {
+          success: false,
+          message: 'Failed to update item',
+          data: null,
+          error: error instanceof Error ? error.message : 'Unknown error',
+        },
         400,
       )
     }
@@ -82,13 +137,30 @@ abstract class Controller<T extends Entity> {
     const { id } = c.req.param()
     try {
       await this.repository.delete(id)
-      return c.json({ success: true })
+      return c.json<ApiResponse<null>>({
+        success: true,
+        message: 'Deleted successfully',
+        data: null,
+      })
     } catch (error) {
       if (error instanceof Error && error.message.includes('not found')) {
-        return c.json({ error: error.message }, 404)
+        return c.json<ApiResponse<null>>(
+          {
+            success: false,
+            message: 'Not found',
+            data: null,
+            error: error.message,
+          },
+          404,
+        )
       }
-      return c.json(
-        { error: error instanceof Error ? error.message : 'Unknown error' },
+      return c.json<ApiResponse<null>>(
+        {
+          success: false,
+          message: 'Failed to delete item',
+          data: null,
+          error: error instanceof Error ? error.message : 'Unknown error',
+        },
         500,
       )
     }

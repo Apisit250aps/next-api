@@ -1,9 +1,6 @@
 import { z } from 'zod'
-import Repository, {
-  BaseEntitySchema,
-  type CreateInput,
-  type UpdateInput,
-} from '../lib/repository'
+import Repository, { BaseEntitySchema } from '../lib/repository'
+import type { CreateInput, UpdateInput } from '@/types'
 
 const userSchema = BaseEntitySchema(
   z.object({

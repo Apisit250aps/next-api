@@ -5,32 +5,11 @@ import type {
   OptionalUnlessRequiredId,
   UpdateFilter,
 } from 'mongodb'
-import { v7 as uuidv7 } from 'uuid'
+
+import { uuidv7 } from './utils'
+
 import { z } from 'zod'
-
-export const BaseEntitySchema = <T extends z.ZodRawShape>(
-  schema: z.ZodObject<T>,
-) => {
-  return z.object({
-    id: z.uuid().default(() => uuidv7()),
-    ...schema.shape,
-    createdAt: z.date().default(() => new Date()),
-    updatedAt: z.date().default(() => new Date()),
-  })
-}
-
-export type Entity = {
-  id: string
-  createdAt: Date
-  updatedAt: Date
-  [key: string]: unknown
-}
-
-export type CreateInput<T extends Entity> = Omit<
-  T,
-  'id' | 'createdAt' | 'updatedAt'
->
-export type UpdateInput<T extends Entity> = Partial<Omit<T, 'id' | 'createdAt'>>
+import type { Entity, CreateInput, UpdateInput } from '@/types'
 
 abstract class Repository<T extends Entity> {
   abstract readonly collectionName: string
