@@ -2,4 +2,7 @@
 npm install
 npm run dev
 ```
-# core-repository
+
+```
+open http://localhost:3000
+```
