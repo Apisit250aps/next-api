@@ -1,13 +1,24 @@
 {
   "name": "core",
+  "private": true,
   "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "dev": "tsx watch --env-file=.env src/index.ts",
     "build": "tsc",
+    "build:types": "npm run build -w @aps/core-types",
+    "build:core": "npm run build -w @aps/core",
+    "build:packages": "npm run build:types && npm run build:core",
+    "build:all": "npm run build:packages && npm run build",
     "start": "node dist/index.js",
-    "lint": "eslint"
+    "lint": "eslint",
+    "clean:packages": "npm run clean --workspaces --if-present"
   },
   "dependencies": {
+    "@aps/core": "workspace:*",
+    "@aps/core-types": "workspace:*",
     "@hono/node-server": "^1.19.12",
     "hono": "^4.12.10",
     "lodash": "^4.18.1",

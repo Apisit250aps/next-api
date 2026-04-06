@@ -5,12 +5,20 @@ import type {
   OptionalUnlessRequiredId,
   UpdateFilter,
 } from 'mongodb'
-
-import { uuidv7 } from './utils'
-import { BaseEntitySchema } from './model'
-
+import { v7 as uuidv7 } from 'uuid'
 import { z } from 'zod'
 import type { Entity, CreateInput, UpdateInput } from '@aps/core-types'
+
+export const BaseEntitySchema = <T extends z.ZodRawShape>(
+  schema: z.ZodObject<T>,
+) => {
+  return z.object({
+    id: z.uuid().default(() => uuidv7()),
+    ...schema.shape,
+    createdAt: z.date().default(() => new Date()),
+    updatedAt: z.date().default(() => new Date()),
+  })
+}
 
 abstract class Repository<T extends Entity> {
   abstract readonly collectionName: string
@@ -160,4 +168,3 @@ abstract class Repository<T extends Entity> {
 }
 
 export default Repository
-export { BaseEntitySchema }

@@ -1,4 +1,4 @@
-import Controller from '@/lib/controller'
+import Controller from '@aps/core/controller'
 import client from '@/lib/mongo'
 import UserRepository, { type User } from '@/repositories/user.repo'
 

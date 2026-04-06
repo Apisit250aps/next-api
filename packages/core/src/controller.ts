@@ -4,8 +4,8 @@ import type {
   CreateInput,
   UpdateInput,
 } from '@aps/core-types'
-import type Repository from '../repository'
 import { Hono, type Context } from 'hono'
+import type Repository from './repository'
 
 abstract class Controller<T extends Entity> {
   abstract readonly repository: Repository<T>
