@@ -34,28 +34,65 @@ abstract class BaseController<T extends Entity> {
   readonly keyId = 'id'
   public app: Hono
   private isRegistered = false
+  private readonly registeredRoutes: string[] = []
 
   constructor() {
     this.app = new Hono()
   }
 
   protected getRoute(path: string, handler: (c: Context) => Promise<Response>) {
-    this.app.get(this.getBasePath(path), handler)
+    this.registerRoute('GET', path, handler)
   }
   protected postRoute(
     path: string,
     handler: (c: Context) => Promise<Response>,
   ) {
-    this.app.post(this.getBasePath(path), handler)
+    this.registerRoute('POST', path, handler)
   }
   protected putRoute(path: string, handler: (c: Context) => Promise<Response>) {
-    this.app.put(this.getBasePath(path), handler)
+    this.registerRoute('PUT', path, handler)
   }
   protected deleteRoute(
     path: string,
     handler: (c: Context) => Promise<Response>,
   ) {
-    this.app.delete(this.getBasePath(path), handler)
+    this.registerRoute('DELETE', path, handler)
+  }
+
+  private registerRoute(
+    method: 'GET' | 'POST' | 'PUT' | 'DELETE',
+    path: string,
+    handler: (c: Context) => Promise<Response>,
+  ): void {
+    let normalizedPath = path.trim()
+    if (normalizedPath.startsWith('/')) {
+      normalizedPath = `${normalizedPath.slice(1)}`
+    }
+    const fullPath = this.getBasePath(normalizedPath)
+    const routeSignature = `${method} ${fullPath}`
+
+    if (this.registeredRoutes.includes(routeSignature)) {
+      throw new Error(
+        `Duplicate route detected in ${this.constructor.name || 'Controller'}: ${routeSignature}`,
+      )
+    }
+
+    this.registeredRoutes.push(routeSignature)
+
+    switch (method) {
+      case 'GET':
+        this.app.get(fullPath, handler)
+        break
+      case 'POST':
+        this.app.post(fullPath, handler)
+        break
+      case 'PUT':
+        this.app.put(fullPath, handler)
+        break
+      case 'DELETE':
+        this.app.delete(fullPath, handler)
+        break
+    }
   }
 
   private getBasePath(sub?: string): string {
@@ -72,9 +109,25 @@ abstract class BaseController<T extends Entity> {
     this.deleteRoute(`:${this.keyId}`, (c) => this.delete(c))
   }
 
+  private logRegisteredRoutes(): void {
+    const uniqueRoutes = Array.from(new Set(this.registeredRoutes))
+    const controllerName = this.constructor.name || 'Controller'
+
+    if (uniqueRoutes.length === 0) {
+      console.log(`[${controllerName}] No routes registered`)
+      return
+    }
+
+    console.log(`[${controllerName}] Registered routes:`)
+    for (const route of uniqueRoutes) {
+      console.log(`- ${route}`)
+    }
+  }
+
   public routes(): Hono {
     if (!this.isRegistered) {
       this.registered()
+      this.logRegisteredRoutes()
       this.isRegistered = true
     }
     return this.app

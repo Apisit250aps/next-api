@@ -5,9 +5,8 @@ class UserController extends Controller<User> {
   readonly repository = userRepo
   readonly prefix = 'users'
 
-  override registered(): void {
+  protected override registered(): void {
     super.registered()
-    this.app.get('/search', (c) => this.get(c))
   }
 }
 
