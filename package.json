@@ -2,6 +2,7 @@
   "name": "@aps/next-api",
   "version": "0.1.0",
   "private": false,
+  "license": "MIT",
   "description": "Reusable Hono and MongoDB controller/repository toolkit with shared API types.",
   "type": "module",
   "main": "./packages/core/dist/index.js",
