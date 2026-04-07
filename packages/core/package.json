@@ -18,6 +18,14 @@
       "types": "./dist/repository.d.ts",
       "default": "./dist/repository.js"
     },
+    "./base-controller": {
+      "types": "./dist/base-controller.d.ts",
+      "default": "./dist/base-controller.js"
+    },
+    "./base-repository": {
+      "types": "./dist/base-repository.d.ts",
+      "default": "./dist/base-repository.js"
+    },
     "./field": {
       "types": "./dist/field.d.ts",
       "default": "./dist/field.js"
