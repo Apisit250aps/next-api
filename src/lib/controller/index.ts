@@ -4,7 +4,7 @@ import type {
   CreateInput,
   UpdateInput,
 } from '@aps/next-api-types'
-import type Repository from '../repository'
+import type Repository from '../repository/index.js'
 import { Hono, type Context } from 'hono'
 
 abstract class Controller<T extends Entity> {

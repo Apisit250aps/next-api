@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { uuidv7 } from './utils'
+import { uuidv7 } from './utils.js'
 
 export const BaseEntitySchema = <T extends z.ZodRawShape>(
   schema: z.ZodObject<T>,

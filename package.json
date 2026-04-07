@@ -1,8 +1,48 @@
 {
-  "name": "core",
+  "name": "@aps/next-api",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "description": "Reusable Hono and MongoDB controller/repository toolkit with shared API types.",
   "type": "module",
+  "main": "./packages/core/dist/index.js",
+  "types": "./packages/core/dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./packages/core/dist/index.d.ts",
+      "default": "./packages/core/dist/index.js"
+    },
+    "./controller": {
+      "types": "./packages/core/dist/controller.d.ts",
+      "default": "./packages/core/dist/controller.js"
+    },
+    "./repository": {
+      "types": "./packages/core/dist/repository.d.ts",
+      "default": "./packages/core/dist/repository.js"
+    },
+    "./base-controller": {
+      "types": "./packages/core/dist/base-controller.d.ts",
+      "default": "./packages/core/dist/base-controller.js"
+    },
+    "./base-repository": {
+      "types": "./packages/core/dist/base-repository.d.ts",
+      "default": "./packages/core/dist/base-repository.js"
+    },
+    "./field": {
+      "types": "./packages/core/dist/field.d.ts",
+      "default": "./packages/core/dist/field.js"
+    },
+    "./types": {
+      "types": "./packages/types/dist/index.d.ts",
+      "default": "./packages/types/dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "packages/core",
+    "packages/types",
+    "README.md",
+    "release"
+  ],
   "workspaces": [
     "packages/*"
   ],
@@ -35,5 +75,13 @@
     "eslint": "^9",
     "typescript": "^5",
     "typescript-eslint": "^8.46.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Apisit250aps/core-repository.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Apisit250aps/core-repository/issues"
+  },
+  "homepage": "https://github.com/Apisit250aps/core-repository#readme"
 }

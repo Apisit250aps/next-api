@@ -1,5 +1,5 @@
 import Controller from '@aps/next-api-core/controller'
-import { userRepo, type User } from '../repositories/user.repo'
+import { userRepo, type User } from '../repositories/user.repo.js'
 
 class UserController extends Controller<User> {
   readonly repository = userRepo

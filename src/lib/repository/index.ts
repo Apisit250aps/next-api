@@ -7,8 +7,8 @@ import type {
   UpdateFilter,
 } from 'mongodb'
 
-import { uuidv7 } from './utils'
-import { BaseEntitySchema } from './model'
+import { uuidv7 } from './utils.js'
+import { BaseEntitySchema } from './model.js'
 
 import { z } from 'zod'
 import type { Entity, CreateInput, UpdateInput } from '@aps/next-api-types'

@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import Repository from '@aps/next-api-core/repository'
 import type { CreateInput, UpdateInput } from '@aps/next-api-types'
-import client from '../lib/mongo'
+import client from '../lib/mongo/index.js'
 import { BaseEntity, EmailField, StringField } from '@aps/next-api-core/field'
 
 const userSchema = BaseEntity({

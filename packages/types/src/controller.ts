@@ -3,7 +3,7 @@ import type {
   Entity,
   RepositoryContract,
   UpdateInput,
-} from './repository'
+} from './repository.js'
 
 export type ResponseStatus = 200 | 201 | 400 | 404 | 500
 
