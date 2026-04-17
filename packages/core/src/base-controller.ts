@@ -30,11 +30,11 @@ type RepositoryLike<T extends Entity> = {
 
 abstract class BaseController<T extends Entity> {
   abstract readonly repository: RepositoryLike<T>
-  readonly group = ''
+  readonly group: string = ''
   readonly prefix: string = ''
-  readonly keyId = 'id'
+  readonly keyId: string = 'id'
   public app: Hono
-  private isRegistered = false
+  private isRegistered: boolean = false
   private readonly registeredRoutes: string[] = []
 
   constructor() {
