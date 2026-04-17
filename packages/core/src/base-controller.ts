@@ -30,6 +30,7 @@ type RepositoryLike<T extends Entity> = {
 
 abstract class BaseController<T extends Entity> {
   abstract readonly repository: RepositoryLike<T>
+  readonly group = ''
   readonly prefix: string = ''
   readonly keyId = 'id'
   public app: Hono
@@ -97,7 +98,8 @@ abstract class BaseController<T extends Entity> {
 
   private getBasePath(sub?: string): string {
     const prefix = this.prefix?.trim().replace(/^\/+|\/+$/g, '')
-    const path = [prefix, sub].filter(Boolean).join('/')
+    const group = this.group?.trim().replace(/^\/+|\/+$/g, '')
+    const path = [group, prefix, sub].filter(Boolean).join('/')
     return path ? `/${path}` : '/'
   }
 
