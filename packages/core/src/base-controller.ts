@@ -70,7 +70,7 @@ abstract class BaseController<T extends Entity> {
       normalizedPath = `${normalizedPath.slice(1)}`
     }
     const fullPath = this.getBasePath(normalizedPath)
-    const routeSignature = `${method} ${this.group.length ? `/${this.group}/` : ''}${fullPath}`
+    const routeSignature = `${method} ${this.group.length ? `/${this.group}` : ''}${fullPath}`
 
     if (this.registeredRoutes.includes(routeSignature)) {
       throw new Error(
