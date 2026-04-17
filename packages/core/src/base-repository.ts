@@ -16,7 +16,7 @@ abstract class BaseRepository<T extends Entity> {
   abstract readonly collectionName: string
   abstract readonly schema: z.ZodType<T>
   readonly indexes: IndexDescription[] = []
-  private collection: Collection<T> | null = null
+  protected collection: Collection<T> | null = null
 
   protected client: MongoClient
 
@@ -24,7 +24,7 @@ abstract class BaseRepository<T extends Entity> {
     this.client = client
   }
 
-  private async getCollection(): Promise<Collection<T>> {
+  protected async getCollection(): Promise<Collection<T>> {
     if (!this.collection) {
       await this.client.connect()
       const collection = this.client.db().collection<T>(this.collectionName)
