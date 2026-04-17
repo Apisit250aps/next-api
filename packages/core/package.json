@@ -38,9 +38,6 @@
     "build": "tsc -p tsconfig.json",
     "clean": "rimraf dist"
   },
-  "dependencies": {
-    "@aps/next-api-types": "file:../types"
-  },
   "peerDependencies": {
     "hono": "^4.0.0",
     "mongodb": "^7.0.0",

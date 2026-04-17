@@ -10,7 +10,11 @@ import type {
 } from 'mongodb'
 
 import { z } from 'zod'
-import type { Entity, CreateInput, UpdateInput } from '@aps/next-api-types'
+import type {
+  Entity,
+  CreateInput,
+  UpdateInput,
+} from '../../types/dist/index.js'
 
 abstract class BaseRepository<T extends Entity> {
   abstract readonly collectionName: string

@@ -3,7 +3,7 @@ import type {
   Entity,
   CreateInput,
   UpdateInput,
-} from '@aps/next-api-types'
+} from '../../types/dist/index.js'
 import { Hono, type Context } from 'hono'
 
 type ResponseStatus = 200 | 201 | 400 | 404 | 500
