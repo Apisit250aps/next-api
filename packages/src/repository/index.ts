@@ -11,10 +11,11 @@ import type {
 
 import { z } from 'zod'
 import { CreateInput, Entity, UpdateInput } from '@/types'
+import { omit } from '../utils'
 
 abstract class BaseRepository<T extends Entity> {
   abstract readonly collectionName: string
-  abstract readonly schema: z.ZodType<T>
+  abstract readonly schema: z.ZodObject<z.ZodRawShape>
   readonly indexes: IndexDescription[] = []
   protected collection: Collection<T> | null = null
 
@@ -41,9 +42,12 @@ abstract class BaseRepository<T extends Entity> {
     return await this.schema.safeParseAsync(item)
   }
 
-  public async validate(item: unknown): Promise<T> {
+  public async validate(item: unknown, partial = false): Promise<T> {
     try {
-      return await this.schema.parseAsync(item)
+      if (partial) {
+        return (await this.schema.partial().parseAsync(item)) as T
+      }
+      return (await this.schema.parseAsync(item)) as T
     } catch (error) {
       throw new Error(
         `Validation failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
@@ -113,22 +117,25 @@ abstract class BaseRepository<T extends Entity> {
   public async update(id: string, item: UpdateInput<T>): Promise<T> {
     const collection = await this.getCollection()
     const now = new Date()
+
     const dataToUpdate = {
       ...item,
       updatedAt: now,
     }
 
+    const data = await this.validate(dataToUpdate, true)
+
     const updateResult = await collection.findOneAndUpdate(
       { id, deletedAt: null } as unknown as Filter<T>,
-      { $set: dataToUpdate } as UpdateFilter<T>,
+      { $set: omit(data, 'id', 'createdAt') } as UpdateFilter<T>,
       { returnDocument: 'after', projection: { _id: 0, deletedAt: 0 } },
     )
 
-    if (!updateResult || !updateResult.value) {
+    if (!updateResult) {
       throw new Error(`Document with id ${id} not found`)
     }
 
-    return updateResult.value as T
+    return updateResult as T
   }
 
   public async delete(id: string): Promise<void> {

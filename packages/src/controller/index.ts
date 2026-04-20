@@ -1,6 +1,6 @@
 import { Hono, type Context } from 'hono'
 import { ApiResponse, CreateInput, Entity, UpdateInput } from '@/types'
-import Repository from '@/repository';
+import Repository from '@/repository'
 
 type ResponseStatus = 200 | 201 | 400 | 404 | 500
 
@@ -224,7 +224,9 @@ abstract class BaseController<T extends Entity> {
           validate.error?.message ?? 'Validation failed',
         )
       }
-      const created = await this.repository.create(validate.data)
+      const created = await this.repository.create(
+        validate.data as CreateInput<T>,
+      )
       return this.created(c, created)
     } catch (error) {
       return this.badRequest(
