@@ -1,10 +1,5 @@
-import type {
-  ApiResponse,
-  Entity,
-  CreateInput,
-  UpdateInput,
-} from '../../types/dist/index.js'
 import { Hono, type Context } from 'hono'
+import { ApiResponse, CreateInput, Entity, UpdateInput } from '../types'
 
 type ResponseStatus = 200 | 201 | 400 | 404 | 500
 

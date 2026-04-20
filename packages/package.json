@@ -11,24 +11,28 @@
       "default": "./dist/index.js"
     },
     "./controller": {
-      "types": "./dist/controller.d.ts",
-      "default": "./dist/controller.js"
+      "types": "./dist/controller/index.d.ts",
+      "default": "./dist/controller/index.js"
     },
     "./repository": {
-      "types": "./dist/repository.d.ts",
-      "default": "./dist/repository.js"
+      "types": "./dist/repository/index.d.ts",
+      "default": "./dist/repository/index.js"
     },
     "./base-controller": {
-      "types": "./dist/base-controller.d.ts",
-      "default": "./dist/base-controller.js"
+      "types": "./dist/controller/base-controller.d.ts",
+      "default": "./dist/controller/base-controller.js"
     },
     "./base-repository": {
-      "types": "./dist/base-repository.d.ts",
-      "default": "./dist/base-repository.js"
+      "types": "./dist/repository/base-repository.d.ts",
+      "default": "./dist/repository/base-repository.js"
+    },
+    "./fields": {
+      "types": "./dist/fields/index.d.ts",
+      "default": "./dist/fields/index.js"
     },
     "./field": {
-      "types": "./dist/field.d.ts",
-      "default": "./dist/field.js"
+      "types": "./dist/fields/index.d.ts",
+      "default": "./dist/fields/index.js"
     }
   },
   "files": [

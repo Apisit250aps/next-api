@@ -10,11 +10,7 @@ import type {
 } from 'mongodb'
 
 import { z } from 'zod'
-import type {
-  Entity,
-  CreateInput,
-  UpdateInput,
-} from '../../types/dist/index.js'
+import { CreateInput, Entity, UpdateInput } from '../types'
 
 abstract class BaseRepository<T extends Entity> {
   abstract readonly collectionName: string
