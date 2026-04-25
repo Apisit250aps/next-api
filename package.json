@@ -1,6 +1,6 @@
 {
   "name": "@aps/next-api",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "private": false,
   "license": "MIT",
   "description": "Reusable Hono and MongoDB controller/repository toolkit with shared API types.",

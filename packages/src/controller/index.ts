@@ -15,6 +15,11 @@ abstract class BaseController<T extends Entity> {
 
   constructor() {
     this.app = new Hono()
+    this.get = this.get.bind(this)
+    this.getById = this.getById.bind(this)
+    this.create = this.create.bind(this)
+    this.update = this.update.bind(this)
+    this.delete = this.delete.bind(this)
   }
 
   protected getRoute(path: string, handler: (c: Context) => Promise<Response>) {
@@ -110,7 +115,7 @@ abstract class BaseController<T extends Entity> {
     return this.app
   }
 
-  protected response<D>(
+  response<D>(
     c: Context,
     status: ResponseStatus,
     payload: ApiResponse<D>,
@@ -119,7 +124,7 @@ abstract class BaseController<T extends Entity> {
     return c.json<ApiResponse<D>>(payload)
   }
 
-  protected ok<D>(c: Context, data: D, message = 'Success'): Response {
+  ok<D>(c: Context, data: D, message = 'Success'): Response {
     return this.response(c, 200, {
       success: true,
       message,
@@ -127,11 +132,7 @@ abstract class BaseController<T extends Entity> {
     })
   }
 
-  protected created<D>(
-    c: Context,
-    data: D,
-    message = 'Created successfully',
-  ): Response {
+  created<D>(c: Context, data: D, message = 'Created successfully'): Response {
     return this.response(c, 201, {
       success: true,
       message,
@@ -139,7 +140,7 @@ abstract class BaseController<T extends Entity> {
     })
   }
 
-  protected badRequest(
+  badRequest(
     c: Context,
     message = 'Bad request',
     error = 'Bad request',
@@ -152,11 +153,7 @@ abstract class BaseController<T extends Entity> {
     })
   }
 
-  protected notFound(
-    c: Context,
-    message = 'Not found',
-    error = 'Not found',
-  ): Response {
+  notFound(c: Context, message = 'Not found', error = 'Not found'): Response {
     return this.response(c, 404, {
       success: false,
       message,
@@ -165,7 +162,7 @@ abstract class BaseController<T extends Entity> {
     })
   }
 
-  protected error(
+  error(
     c: Context,
     message = 'Internal server error',
     error = 'Internal server error',
@@ -179,7 +176,7 @@ abstract class BaseController<T extends Entity> {
     })
   }
 
-  protected isNotFoundError(error: unknown): error is Error {
+  isNotFoundError(error: unknown): error is Error {
     return error instanceof Error && error.message.includes('not found')
   }
 
